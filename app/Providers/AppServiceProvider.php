@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Services\DailySentenceInterface;
 use App\Services\GetDataFromMetaphorpsum;
+use App\Services\GetDataFromItsthisforthat;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,7 +17,13 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        $this->app->bind(DailySentenceInterface::class, GetDataFromMetaphorpsum::class);
+        if (request()->bind === 'metaphorpsum') {
+            $this->app->bind(DailySentenceInterface::class, GetDataFromMetaphorpsum::class);
+        } elseif (request()->bind === 'itsthisforthat') {
+            $this->app->bind(DailySentenceInterface::class, GetDataFromItsthisforthat::class);
+        } else {
+            $this->app->bind(DailySentenceInterface::class, GetDataFromMetaphorpsum::class);
+        }
     }
 
     /**

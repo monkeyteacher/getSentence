@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Services\DailySentenceService;
+use App\Services\GetDataFromMetaphorpsum;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
@@ -13,13 +13,13 @@ class DailySentenceTest extends TestCase
     *
     * @return void
     */
-    public function test_DailySentenceService_is_work()
+    public function test_GetDataFromMetaphorpsum_is_work()
     {
         Http::fake([
             'http://metaphorpsum.com/sentences/3' => Http::response('Hello metaphorpsum', 200),
         ]);
-        $DailySentenceService = new DailySentenceService();
-        $result = $DailySentenceService->getSentence();
+        $getDataFromMetaphorpsum = new GetDataFromMetaphorpsum();
+        $result = $getDataFromMetaphorpsum->getSentence();
         $this->assertIsArray($result);
         $expectedValues = [
             'status'=>'success',

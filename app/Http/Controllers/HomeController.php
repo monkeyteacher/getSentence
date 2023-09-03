@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\DailySentenceService;
+use App\Services\DailySentenceInterface;
 
 class HomeController extends Controller
 {
     //
     public function __construct(
-        private DailySentenceService $dailySentenceService
+        private DailySentenceInterface $dailySentenceInterface
     ) {
     }
 
     public function index()
     {
-        $res = $this->dailySentenceService->getSentence();
+        $res = $this->dailySentenceInterface->getSentence();
         if ($res['status'] == 'success') {
             return response()->json(
                 [
